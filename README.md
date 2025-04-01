@@ -13,7 +13,7 @@ CrowdFund is a decentralized crowdfunding platform built on Web3 technologies th
 
 ## Tech Stack
 
-- **Frontend**: Next.js 15, React 19, TailwindCSS 4
+- **Frontend**: Next.js 14, React 18, TailwindCSS 3
 - **Backend**: Next.js API routes, Prisma ORM
 - **Database**: PostgreSQL
 - **Web3**: RainbowKit, Wagmi, Viem, Ethers.js
@@ -24,13 +24,17 @@ CrowdFund is a decentralized crowdfunding platform built on Web3 technologies th
 
 ### Prerequisites
 
-- Node.js 18+ and npm/yarn
+- Node.js 20+ and npm/yarn
 - PostgreSQL database
 - Metamask or other Web3 wallet
 
 ### Environment Setup
 
 1. Clone the repository
+   ```bash
+   git clone https://github.com/yourusername/crowd-fund.git
+   cd crowd-fund
+   ```
 2. Copy the environment variables:
    ```bash
    cp .env.example .env
@@ -62,7 +66,7 @@ Visit [http://localhost:3000](http://localhost:3000) to see the application in a
 
 ```bash
 # Start with Docker Compose
-docker-compose up -d
+docker compose up -d
 ```
 
 ## Project Structure
@@ -97,17 +101,17 @@ This project is configured for easy deployment to Vercel. It also includes Docke
 1. Clone the repository:
 
    ```bash
-   git clone <repository-url>
+   git clone https://github.com/yourusername/crowd-fund.git
    cd crowd-fund
    ```
 
-2. Create a `.env.local` file for production settings:
+2. Create a `.env` file for production settings:
 
    ```bash
-   cp .env .env.local
+   cp .env.example .env
    ```
 
-   Update the `.env.local` file with your production values:
+   Update the `.env` file with your production values:
 
    ```
    DATABASE_URL="postgresql://postgres:postgres@postgres:5432/crowdfund?schema=public"
@@ -117,35 +121,10 @@ This project is configured for easy deployment to Vercel. It also includes Docke
 3. Build and start the Docker containers:
 
    ```bash
-   docker-compose up -d
+   docker compose up -d
    ```
 
-4. Run database migrations:
-
-   ```bash
-   docker-compose exec app npx prisma migrate deploy
-   ```
-
-5. Access your application at http://localhost:3000
-
-### Managing Your Deployment
-
-- To view logs:
-
-  ```bash
-  docker-compose logs -f app
-  ```
-
-- To stop the containers:
-
-  ```bash
-  docker-compose down
-  ```
-
-- To stop the containers and remove volumes:
-  ```bash
-  docker-compose down -v
-  ```
+4. Access your application at http://localhost:3000
 
 ## Development Environment
 
@@ -156,25 +135,40 @@ This project is configured for easy deployment to Vercel. It also includes Docke
 
 ### Setup
 
-1. Install dependencies:
+1. Clone the repository:
+
+   ```bash
+   git clone https://github.com/yourusername/crowd-fund.git
+   cd crowd-fund
+   ```
+
+2. Copy the environment variables:
+
+   ```bash
+   cp .env.example .env
+   ```
+
+3. Update the environment variables in the `.env` file with your local development values.
+
+4. Install dependencies:
 
    ```bash
    npm install
    ```
 
-2. Set up the database:
+5. Set up the database:
 
    ```bash
    npx prisma migrate dev
    ```
 
-3. Start the development server:
+6. Start the development server:
 
    ```bash
    npm run dev
    ```
 
-4. Open [http://localhost:3000](http://localhost:3000) in your browser.
+7. Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ## Additional Commands
 
