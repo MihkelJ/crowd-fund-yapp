@@ -1,0 +1,48 @@
+version: '3.8'
+
+services:
+  app:
+    container_name: crowdfund-app
+    hostname: app
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - '3000:3000'
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      - DATABASE_URL=postgresql://postgres:postgres@postgres:5432/crowdfund?schema=public
+      - NEXT_PUBLIC_API_URL=http://localhost:3000
+    networks:
+      - crowdfund-network
+
+  postgres:
+    container_name: crowdfund-postgres
+    image: postgres:16-alpine
+    restart: always
+    ports:
+      - '5432:5432'
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=crowdfund
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U postgres']
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - crowdfund-network
+
+networks:
+  crowdfund-network:
+    driver: bridge
+
+volumes:
+  postgres-data:
+    driver: local

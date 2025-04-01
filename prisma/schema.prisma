@@ -1,0 +1,64 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Campaign {
+  id             String @id @default(uuid())
+  title          String
+  description    String
+  creatorAddress String
+  goal           Float
+  emoji          String @default("🚀")
+
+  tiers Tier[]
+
+  contributions Contribution[]
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  endDate   DateTime?
+}
+
+model Tier {
+  id          String @id @default(nanoid(16))
+  title       String
+  description String
+  perk        String
+  amount      Float
+  emoji       String @default("🏅")
+
+  campaign   Campaign @relation(fields: [campaignId], references: [id])
+  campaignId String
+
+  contributions Contribution[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Contribution {
+  id                 String  @id @default(uuid())
+  amount             Float
+  contributorAddress String
+  transactionHash    String?
+
+  campaign   Campaign @relation(fields: [campaignId], references: [id])
+  campaignId String
+
+  tier   Tier?   @relation(fields: [tierId], references: [id])
+  tierId String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
