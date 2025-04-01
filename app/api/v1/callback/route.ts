@@ -11,7 +11,6 @@ const createResponse = (body: unknown, status: number) => {
 };
 
 export async function POST(req: Request) {
-
   try {
     const { txHash } = await req.json();
 
@@ -48,12 +47,18 @@ export async function POST(req: Request) {
       return createResponse({ error: 'Campaign not found or not valid' }, 404);
     }
 
-    const tier = campaign.tiers.find(
-      (tier) => tier.amount === parseFloat(payment.invoiceAmount),
-    );
+    const tier = campaign.tiers.find((tier) => tier.id === payment.memo);
 
     if (!tier) {
       return createResponse({ error: 'Tier not found or not valid' }, 404);
+    }
+
+    // Making sure the paid amount is equal or greater than the tier amount
+    if (parseFloat(payment.invoiceAmount) < tier.amount) {
+      return createResponse(
+        { error: 'Paid amount is less than the tier amount' },
+        400,
+      );
     }
 
     await prisma.contribution.create({
