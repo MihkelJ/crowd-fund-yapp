@@ -11,15 +11,6 @@ CrowdFund is a decentralized crowdfunding platform built on Web3 technologies th
 - 📊 **Campaign Dashboard**: Track your campaign's progress and contributions
 - 📱 **Responsive Design**: Works seamlessly on desktop and mobile devices
 
-## Tech Stack
-
-- **Frontend**: Next.js 14, React 18, TailwindCSS 3
-- **Backend**: Next.js API routes, Prisma ORM
-- **Database**: PostgreSQL
-- **Web3**: RainbowKit, Wagmi, Viem, Ethers.js
-- **Authentication**: SIWE (Sign-In with Ethereum)
-- **Deployment**: Docker, Vercel-ready
-
 ## Getting Started
 
 ### Prerequisites
